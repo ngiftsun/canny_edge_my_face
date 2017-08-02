@@ -19,6 +19,7 @@ Run src/cannyEdgeMyFace.py
 ```
 ipython -i src/cannyEdgeMyFace.py 
 ```
+![Alt text](canny_edge.png?raw=true "Example Result")
 
 
 
