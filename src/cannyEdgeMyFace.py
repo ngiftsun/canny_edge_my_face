@@ -10,6 +10,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
 class image_converter:    
+    
   def __init__(self):
     self.bridge = CvBridge()  
     self.image_pub = rospy.Publisher("image",Image,queue_size=1000)
@@ -20,14 +21,9 @@ class image_converter:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
       print(e)
-
     gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY) 
-    kernel = np.ones((5,5),np.float32)/25
-    dst = cv2.filter2D(gray_image,-1,kernel)
-
-    cv_image  = cv2.Canny(gray_image ,40,70)  
-
-    cv2.imshow("Image window", cv_image)
+    canny_image  = cv2.Canny(gray_image ,40,70)  
+    cv2.imshow("Canny Edge Filter", canny_image)
     cv2.waitKey(3)
     try:
       self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
